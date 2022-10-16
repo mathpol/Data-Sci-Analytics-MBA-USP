@@ -294,7 +294,7 @@ bd <- tibble::tibble(livro = c("A", "B", "C"),
 
 ```
 
-Construindo a função para a estatística qui-quadrado ($X^{2}$)
+Construindo a função para a estatística qui-quadrado ($\chi^{2}$)
 
 ```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 chi2 <- function(x,z){
