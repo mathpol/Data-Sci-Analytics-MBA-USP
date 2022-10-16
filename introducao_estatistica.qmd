@@ -149,9 +149,13 @@ table2 |> select(-1) |> kableExtra::kbl(caption = "Estatísticas Descritivas Ex.
 
 3.  Em certo jogo, probabilidade de vitória (sucesso) a cada nova jogada é 1/6. Se forem feitas 10 jogadas, quais são as seguintes probabilidades:
 
+```{=html}
+<!-- -->
+```
 a)  Ter vitória em 4 jogadas.
 
 A fórmula a ser usada é a da Distribuição Normal (p. 44 dos slides)
+
 ```{r ex3_a}
 # Criando a função binomial
 dist_bin <- function(n,k,p){
@@ -165,8 +169,6 @@ k <- 4
 # Aplicando a função
 glue::glue({"Resposta:"}, {" "}, janitor::round_half_up(dist_bin(n,k,p)*100,4), {"%"})
 ```
-
-
 
 b)  Ter vitória em **pelo menos** 7 jogadas
 
@@ -184,15 +186,11 @@ r4 <- janitor::round_half_up(dist_bin(n,k4,p)*100,4)
 glue::glue({"Resposta:"}, {" "}, r1 + r2 + r3 + r4, {"%"})
 ```
 
-
-4. (Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que um aluno acerte três questões a cada cinco testes
-Seja X o número de tentativas até o décimo segundo acerto. Determine a probabilidade de que o aluno
-precise fazer 20 questões para acertar 12.
+4.  (Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que um aluno acerte três questões a cada cinco testes Seja X o número de tentativas até o décimo segundo acerto. Determine a probabilidade de que o aluno precise fazer 20 questões para acertar 12.
 
 Nessa questão trabalharemos com Distribuião Binimial Negativa (DBN).
 
 Quando pergunta sobre **quantas rodadas** e não sobre **quantos acertos** estamos diante de casos de DBN.
-
 
 ```{r}
 dist_bin_neg <- function(n,k,p,gl){
@@ -217,8 +215,7 @@ glue::glue({"Resposta: "}, {""}, round_half_up(dnbinom(n-k, k, p)*100,2), {"%"})
 
 ```
 
-
-5. (Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que, em determinado hospital, 3 clientes são operados diariamente de cirurgia do estômago, seguindo uma distribuição Poisson. Calcule a probabilidade de que 28 clientes sejam operados na próxima semana (7 dias úteis).
+5.  (Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que, em determinado hospital, 3 clientes são operados diariamente de cirurgia do estômago, seguindo uma distribuição Poisson. Calcule a probabilidade de que 28 clientes sejam operados na próxima semana (7 dias úteis).
 
 ```{r}
 fun_poisson <- function(n,k){
@@ -239,10 +236,51 @@ Agora, um jeito muito mais fácil. Utilizamos a função *dpois* (*R Native*)
 glue::glue({"Resposta: "}, {""}, round_half_up(dpois(k,n)*100,3), {"%"})
 ```
 
-6. Nos últimos meses, foram feitas medições do tempo decorrido entre o início e finalização de uma das etapas do processo de produção de certo produto. O tempo médio foi calculado em 26,5 minutos e o desvio padrão foi de 4,0 minutos. Sabendo que tal variável segue uma distribuição normal, identifique as seguintes informações:
+6.  Nos últimos meses, foram feitas medições do tempo decorrido entre o início e finalização de uma das etapas do processo de produção de certo produto. O tempo médio foi calculado em 26,5 minutos e o desvio padrão foi de 4,0 minutos. Sabendo que tal variável segue uma distribuição normal, identifique as seguintes informações:
 
-a) P(X>37)
 
-b) P(X<20)
+Teremos que trabalhar com Z score
 
-c) P(22<X<28)
+```{r}
+media <- 26.5
+sd <- 4
+```
+
+
+a)  P(X\>37)
+
+```{r}
+p37 <- 37
+z37 <- (p37-media)/sd
+glue::glue({"P(X>37) = "},janitor::round_half_up(pnorm(p37, media, sd, lower.tail=FALSE),4))
+```
+
+
+b)  P(X\<20)
+
+```{r}
+p20 <- 20
+z20 <- (p20-media)/sd
+glue::glue({"P(X<20) = "},janitor::round_half_up(pnorm(p20, media, sd, lower.tail=TRUE),4)) # Se é Menor que, temos que trabalhar com lower.tail.
+```
+
+
+c)  P(22\<X\<28)
+
+```{r}
+p22 <- 22
+p28 <- 28
+
+z22 <- (p22-media)/sd
+z28 <- (p28-media)/sd
+
+p_a <- janitor::round_half_up(pnorm(p22, media, sd, lower.tail=TRUE),4) # Se é Menor que, temos que trabalhar com lower.tail.
+
+p_b <- janitor::round_half_up(pnorm(p28, media, sd, lower.tail=FALSE),4) 
+
+glue::glue({"P(22<x<28) = "},p_b - p_a)
+
+```
+
+
+

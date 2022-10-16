@@ -407,6 +407,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="3" type="1">
 <li>Em certo jogo, probabilidade de vitória (sucesso) a cada nova jogada é 1/6. Se forem feitas 10 jogadas, quais são as seguintes probabilidades:</li>
 </ol>
+<!-- -->
 <ol type="a">
 <li>Ter vitória em 4 jogadas.</li>
 </ol>
@@ -513,6 +514,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Resposta: 16.803%</code></pre>
+</div>
+</div>
+<ol start="6" type="1">
+<li>Nos últimos meses, foram feitas medições do tempo decorrido entre o início e finalização de uma das etapas do processo de produção de certo produto. O tempo médio foi calculado em 26,5 minutos e o desvio padrão foi de 4,0 minutos. Sabendo que tal variável segue uma distribuição normal, identifique as seguintes informações:</li>
+</ol>
+<p>Teremos que trabalhar com Z score</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>media <span class="ot">&lt;-</span> <span class="fl">26.5</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ol type="a">
+<li>P(X&gt;37)</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p37 <span class="ot">&lt;-</span> <span class="dv">37</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>z37 <span class="ot">&lt;-</span> (p37<span class="sc">-</span>media)<span class="sc">/</span>sd</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"P(X&gt;37) = "</span>},janitor<span class="sc">::</span><span class="fu">round_half_up</span>(<span class="fu">pnorm</span>(p37, media, sd, <span class="at">lower.tail=</span><span class="cn">FALSE</span>),<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X&gt;37) = 0.0043</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>P(X&lt;20)</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>p20 <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>z20 <span class="ot">&lt;-</span> (p20<span class="sc">-</span>media)<span class="sc">/</span>sd</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"P(X&lt;20) = "</span>},janitor<span class="sc">::</span><span class="fu">round_half_up</span>(<span class="fu">pnorm</span>(p20, media, sd, <span class="at">lower.tail=</span><span class="cn">TRUE</span>),<span class="dv">4</span>)) <span class="co"># Se é Menor que, temos que trabalhar com lower.tail.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X&lt;20) = 0.0521</code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>P(22&lt;X&lt;28)</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>p22 <span class="ot">&lt;-</span> <span class="dv">22</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>p28 <span class="ot">&lt;-</span> <span class="dv">28</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>z22 <span class="ot">&lt;-</span> (p22<span class="sc">-</span>media)<span class="sc">/</span>sd</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>z28 <span class="ot">&lt;-</span> (p28<span class="sc">-</span>media)<span class="sc">/</span>sd</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>p_a <span class="ot">&lt;-</span> janitor<span class="sc">::</span><span class="fu">round_half_up</span>(<span class="fu">pnorm</span>(p22, media, sd, <span class="at">lower.tail=</span><span class="cn">TRUE</span>),<span class="dv">4</span>) <span class="co"># Se é Menor que, temos que trabalhar com lower.tail.</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>p_b <span class="ot">&lt;-</span> janitor<span class="sc">::</span><span class="fu">round_half_up</span>(<span class="fu">pnorm</span>(p28, media, sd, <span class="at">lower.tail=</span><span class="cn">FALSE</span>),<span class="dv">4</span>) </span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"P(22&lt;x&lt;28) = "</span>},p_b <span class="sc">-</span> p_a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(22&lt;x&lt;28) = 0.2235</code></pre>
 </div>
 </div>
 </section>
