@@ -1,16 +1,18 @@
 ---
 title: "Introdução à Estatística"
 author: "Matheus Ferreira"
-format: html
 editor: visual
-editor_options: 
-  chunk_output_type: console
+format:
+  html:
+    fig-width: 8
+    fig-height: 4
+    code-fold: true
 ---
 
 ```{r, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 # Instalando pacotes
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, here, readxl, janitor, dplyr, magrittr, psych, gt, kableExtra)
+pacman::p_load(tidyverse, here, readxl, janitor, dplyr, magrittr, psych, gt, kableExtra, glue, Rlab)
 ```
 
 ## Lista de Exercícios
@@ -120,21 +122,21 @@ bd2.2 <- bd2.2 |> transform(var = factor(var,
                                            "intervalo.60%", "intervalo.70%", "intervalo.75%",
                                            "intervalo.80%", "intervalo.90%", "intervalo.95%")))
 
-bd2.2 |> mutate(ref = case_when(
-  Valor >= 0 ~ "Positivo",
-  Valor < 0 ~ "Negativo"
-)) |> 
-  mutate(acao = case_when(
-  `Ação` == "acao_1" ~ "Ação 1",
-  `Ação` == "acao_2" ~ "Ação 2"
-)) |> 
-  ggplot2::ggplot(aes(acao, Valor, fill = ref)) +
-  geom_col() +
-  scale_fill_manual(name = "Direção", values=c("#f46d43", "#74add1")) +
-  facet_wrap(~(var), scales = "free", ncol = 5) +
-  theme_bw() +
-  theme(legend.position = "bottom") +
-  coord_flip()
+# bd2.2 |> mutate(ref = case_when(
+#   Valor >= 0 ~ "Positivo",
+#   Valor < 0 ~ "Negativo"
+# )) |> 
+#   mutate(acao = case_when(
+#   `Ação` == "acao_1" ~ "Ação 1",
+#   `Ação` == "acao_2" ~ "Ação 2"
+# )) |> 
+#   ggplot2::ggplot(aes(acao, Valor, fill = ref)) +
+#   geom_col() +
+#   scale_fill_manual(name = "Direção", values=c("#f46d43", "#74add1")) +
+#   facet_wrap(~(var), scales = "free", ncol = 5) +
+#   theme_bw() +
+#   theme(legend.position = "bottom") +
+#   coord_flip()
 
 
 # bd2.2 |> glimpse()
@@ -145,10 +147,102 @@ table2 |> select(-1) |> kableExtra::kbl(caption = "Estatísticas Descritivas Ex.
   kableExtra::kable_classic(full_width = F, html_font = "Cambria")
 ```
 
+3.  Em certo jogo, probabilidade de vitória (sucesso) a cada nova jogada é 1/6. Se forem feitas 10 jogadas, quais são as seguintes probabilidades:
 
-3. Em certo jogo, probabilidade de vitória (sucesso) a cada nova jogada é 1/6. Se forem feitas 10 jogadas,
-quais são as seguintes probabilidades:
+a)  Ter vitória em 4 jogadas.
 
-a) Ter vitória em 4 jogadas.
+A fórmula a ser usada é a da Distribuição Normal (p. 44 dos slides)
+```{r ex3_a}
+# Criando a função binomial
+dist_bin <- function(n,k,p){
+  factorial(n)/(factorial(k)*factorial(n-k))*p^k*(1-p)^(n-k)
+}
 
-b) Ter vitória em pelo menos 7 jogadas
+p <- 1/6
+n <- 10
+k <- 4
+
+# Aplicando a função
+glue::glue({"Resposta:"}, {" "}, janitor::round_half_up(dist_bin(n,k,p)*100,4), {"%"})
+```
+
+
+
+b)  Ter vitória em **pelo menos** 7 jogadas
+
+```{r ex3_b}
+k1 <- 7
+k2 <- 8
+k3 <- 9
+k4 <- 10
+# Aplicando a função
+r1 <- janitor::round_half_up(dist_bin(n,k1,p)*100,4)
+r2 <- janitor::round_half_up(dist_bin(n,k2,p)*100,4)
+r3 <- janitor::round_half_up(dist_bin(n,k3,p)*100,4)
+r4 <- janitor::round_half_up(dist_bin(n,k4,p)*100,4)
+
+glue::glue({"Resposta:"}, {" "}, r1 + r2 + r3 + r4, {"%"})
+```
+
+
+4. (Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que um aluno acerte três questões a cada cinco testes
+Seja X o número de tentativas até o décimo segundo acerto. Determine a probabilidade de que o aluno
+precise fazer 20 questões para acertar 12.
+
+Nessa questão trabalharemos com Distribuião Binimial Negativa (DBN).
+
+Quando pergunta sobre **quantas rodadas** e não sobre **quantos acertos** estamos diante de casos de DBN.
+
+
+```{r}
+dist_bin_neg <- function(n,k,p,gl){
+ (factorial(n-gl)/(factorial(k-gl)*factorial((n-gl)-(k-gl))))*(p^k)*((1-p)^(n-k))
+}
+
+
+gl <- 1
+p <- 3/5
+n <- 20
+k <- 12
+
+glue::glue({"Resposta:"}, {" "}, round_half_up(dist_bin_neg(n,k,p,gl)*100,2), {"%"})
+
+```
+
+Veja agora uma coisa muito mais fácil. Existe uma função no R chamada *dnbinomial*.
+
+```{r}
+
+glue::glue({"Resposta: "}, {""}, round_half_up(dnbinom(n-k, k, p)*100,2), {"%"})
+
+```
+
+
+5. (Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que, em determinado hospital, 3 clientes são operados diariamente de cirurgia do estômago, seguindo uma distribuição Poisson. Calcule a probabilidade de que 28 clientes sejam operados na próxima semana (7 dias úteis).
+
+```{r}
+fun_poisson <- function(n,k){
+  (exp(-n)*(n^(k)))/factorial(k)
+}
+
+n <- 3
+k <- 28/7 # 28 nos proximos 7 dias  = 4 para cada dia
+
+fun_poisson(n,k)
+
+
+```
+
+Agora, um jeito muito mais fácil. Utilizamos a função *dpois* (*R Native*)
+
+```{r}
+glue::glue({"Resposta: "}, {""}, round_half_up(dpois(k,n)*100,3), {"%"})
+```
+
+6. Nos últimos meses, foram feitas medições do tempo decorrido entre o início e finalização de uma das etapas do processo de produção de certo produto. O tempo médio foi calculado em 26,5 minutos e o desvio padrão foi de 4,0 minutos. Sabendo que tal variável segue uma distribuição normal, identifique as seguintes informações:
+
+a) P(X>37)
+
+b) P(X<20)
+
+c) P(22<X<28)
