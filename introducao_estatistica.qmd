@@ -12,7 +12,7 @@ format:
 ```{r, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 # Instalando pacotes
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, here, readxl, janitor, dplyr, magrittr, psych, gt, kableExtra, glue, Rlab)
+pacman::p_load(tidyverse, here, readxl, janitor, dplyr, magrittr, psych, gt, kableExtra, glue, Rlab, tibble)
 ```
 
 ## Lista de Exercícios
@@ -149,14 +149,11 @@ table2 |> select(-1) |> kableExtra::kbl(caption = "Estatísticas Descritivas Ex.
 
 3.  Em certo jogo, probabilidade de vitória (sucesso) a cada nova jogada é 1/6. Se forem feitas 10 jogadas, quais são as seguintes probabilidades:
 
-```{=html}
-<!-- -->
-```
 a)  Ter vitória em 4 jogadas.
 
 A fórmula a ser usada é a da Distribuição Normal (p. 44 dos slides)
 
-```{r ex3_a}
+```{r ex3_a, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 # Criando a função binomial
 dist_bin <- function(n,k,p){
   factorial(n)/(factorial(k)*factorial(n-k))*p^k*(1-p)^(n-k)
@@ -172,7 +169,7 @@ glue::glue({"Resposta:"}, {" "}, janitor::round_half_up(dist_bin(n,k,p)*100,4), 
 
 b)  Ter vitória em **pelo menos** 7 jogadas
 
-```{r ex3_b}
+```{r ex3_b, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 k1 <- 7
 k2 <- 8
 k3 <- 9
@@ -192,7 +189,7 @@ Nessa questão trabalharemos com Distribuião Binimial Negativa (DBN).
 
 Quando pergunta sobre **quantas rodadas** e não sobre **quantos acertos** estamos diante de casos de DBN.
 
-```{r}
+```{r ex4, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 dist_bin_neg <- function(n,k,p,gl){
  (factorial(n-gl)/(factorial(k-gl)*factorial((n-gl)-(k-gl))))*(p^k)*((1-p)^(n-k))
 }
@@ -209,7 +206,7 @@ glue::glue({"Resposta:"}, {" "}, round_half_up(dist_bin_neg(n,k,p,gl)*100,2), {"
 
 Veja agora uma coisa muito mais fácil. Existe uma função no R chamada *dnbinomial*.
 
-```{r}
+```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 
 glue::glue({"Resposta: "}, {""}, round_half_up(dnbinom(n-k, k, p)*100,2), {"%"})
 
@@ -217,7 +214,7 @@ glue::glue({"Resposta: "}, {""}, round_half_up(dnbinom(n-k, k, p)*100,2), {"%"})
 
 5.  (Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que, em determinado hospital, 3 clientes são operados diariamente de cirurgia do estômago, seguindo uma distribuição Poisson. Calcule a probabilidade de que 28 clientes sejam operados na próxima semana (7 dias úteis).
 
-```{r}
+```{r ex5, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 fun_poisson <- function(n,k){
   (exp(-n)*(n^(k)))/factorial(k)
 }
@@ -232,7 +229,7 @@ fun_poisson(n,k)
 
 Agora, um jeito muito mais fácil. Utilizamos a função *dpois* (*R Native*)
 
-```{r}
+```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 glue::glue({"Resposta: "}, {""}, round_half_up(dpois(k,n)*100,3), {"%"})
 ```
 
@@ -241,7 +238,7 @@ glue::glue({"Resposta: "}, {""}, round_half_up(dpois(k,n)*100,3), {"%"})
 
 Teremos que trabalhar com Z score
 
-```{r}
+```{r ex6, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 media <- 26.5
 sd <- 4
 ```
@@ -249,7 +246,7 @@ sd <- 4
 
 a)  P(X\>37)
 
-```{r}
+```{r ex6_a, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 p37 <- 37
 z37 <- (p37-media)/sd
 glue::glue({"P(X>37) = "},janitor::round_half_up(pnorm(p37, media, sd, lower.tail=FALSE),4))
@@ -258,7 +255,7 @@ glue::glue({"P(X>37) = "},janitor::round_half_up(pnorm(p37, media, sd, lower.tai
 
 b)  P(X\<20)
 
-```{r}
+```{r ex6_b, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 p20 <- 20
 z20 <- (p20-media)/sd
 glue::glue({"P(X<20) = "},janitor::round_half_up(pnorm(p20, media, sd, lower.tail=TRUE),4)) # Se é Menor que, temos que trabalhar com lower.tail.
@@ -267,7 +264,7 @@ glue::glue({"P(X<20) = "},janitor::round_half_up(pnorm(p20, media, sd, lower.tai
 
 c)  P(22\<X\<28)
 
-```{r}
+```{r ex6_c, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 p22 <- 22
 p28 <- 28
 
@@ -283,4 +280,48 @@ glue::glue({"P(22<x<28) = "},p_b - p_a)
 ```
 
 
+7. (Fonte Fávero e Belfiore, 2017 Cap. 8) Um grupo de 60 leitores fez uma avaliação de três livros de romance
+e, ao final, escolheram uma das três opções. Teste a hipótese nula de que não há diferença na preferência dos
+leitores, ao nível de significância de 5% (*p < 0.05*). Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 7.
+
+
+```{r ex7, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
+bd <- tibble::tibble(livro = c("A", "B", "C"),
+                                   freq =c(29, 15, 16)) |> 
+  mutate(total = sum(freq)) |>
+  mutate(prop = (freq/total)) |> 
+  mutate(freq_esp = total/length(freq))
+
+```
+
+Construindo a função para a estatística qui-quadrado ($X^{2}$)
+
+```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
+chi2 <- function(x,z){
+  (x-z)^2/z
+}
+
+#chi2(bd$freq, bd$freq_esp)
+```
+
+```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
+bd <- bd |> mutate(chi_2 = chi2(freq, freq_esp))
+bd <- bd |> mutate(chi_2_total = sum(chi_2))
+
+critico <- qchisq(.05, 2, lower.tail=F)
+bd$critico <- critico
+
+# Calculando o p-valor
+bd$p_valor <- pchisq(6.1, 2, lower.tail = FALSE)
+```
+
+Realizando o teste de hipótese
+```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
+h_teste <- function(x,z){
+  if(x > z) {print("Podemos rejeitar H0")}
+if(x <= z) {print("Não podemos rejeitar H0")}
+}
+
+h_teste(bd$chi_2_total, bd$critico)
+```
 
