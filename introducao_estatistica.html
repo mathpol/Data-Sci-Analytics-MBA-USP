@@ -689,20 +689,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>var_test2 <span class="ot">&lt;-</span> <span class="fu">var.test</span>(bd8<span class="sc">$</span>local_a_mm, bd8<span class="sc">$</span>local_b_mm, </span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">"two.sided"</span>))</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O F-test foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test2<span class="sc">$</span>statistic[[<span class="dv">1</span>]],<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O F-test foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test2<span class="sc">$</span>statistic[[<span class="dv">1</span>]],<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>O F-test foi de: 2.7612</code></pre>
+<pre><code>O F-test foi de: 2.761</code></pre>
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O p-valor foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test2<span class="sc">$</span>p.value,<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O p-valor foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test2<span class="sc">$</span>p.value,<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>O p-valor foi de: 0.0783</code></pre>
+<pre><code>O p-valor foi de: 0.078</code></pre>
 </div>
 </div>
-<p>Perceba que a estatística F é igual em ambos os testes (2.7611813). O que muda são os p-valores. PErceba que no teste unicaudal o p-valor é a metade do p-valor do teste bicaudal (0.03917 e 0.07834). Nesse caso eu prefiro fazer o teste bicaudal por ele ser mais conservador, ou seja, ele nos dá mais certeza se realmente podemos rejeitar a hipótese nula (H0) em favor da alternativa. O teste bicaudal é recomendado quando queremos testar se há diferença, sem especificar, se essa diferença é para mais ou para menos. Como o exercício pede para testar se a variabilidade no local<strong>A</strong> é maior do que no local <strong>B</strong>, podemos usar o teste unicaudal.</p>
+<p>Perceba que a estatística F é igual em ambos os testes (2.7611813). O que muda são os p-valores. PErceba que no teste unicaudal o p-valor é a metade do p-valor do teste bicaudal (0.03917 e 0.07834). Nesse caso eu prefiro fazer o teste bicaudal por ele ser mais conservador, ou seja, ele nos dá mais certeza se realmente podemos rejeitar a hipótese nula (H0) em favor da alternativa. O teste bicaudal é recomendado quando queremos testar se há diferença, sem especificar, se essa diferença é para mais ou para menos. Como o exercício pede para testar se a variabilidade no local <strong>A</strong> é maior do que no local <strong>B</strong>, podemos usar o teste unicaudal.</p>
 <p>Vamos plotar para ver qual área representa um diferença estatisticamente significante?</p>
 <div class="cell">
 <details>
@@ -720,6 +720,131 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>Perceba que o valor F = 2.58 representa o valor crítico. No Excel está 2.577. Então, toda a área colorida representa os valores de F para diferenças esttisticamente significantes.</p>
+<ol start="9" type="1">
+<li>(Fonte Fávero e Belfiore, 2017 Cap. 7) Deseja-se comparar o tempo médio de espera para atendimento (min) em 2 hospitais. Para isso, coletou-se uma amostra com 20 pacientes em cada hospital. Verifique se há diferenças entre os tempos médios de espera nos dois hospitais. Considere <span class="math inline">\(\alpha = 1\)</span>. Adicionalmente, calcule os intervalos de confiança para o tempo médio de espera nos dois hospitais. Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 9.</li>
+</ol>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importando o banco</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"Lista de Exercícios - Complementares.xlsx"</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>bd9 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(path, <span class="at">sheet =</span> <span class="dv">9</span>, <span class="at">range =</span> <span class="fu">cell_cols</span>(<span class="st">"A:B"</span>))</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>bd9 <span class="ot">&lt;-</span> bd9 <span class="sc">%&gt;%</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>bd9 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>O exercício começa pela estatística F.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>var_test1 <span class="ot">&lt;-</span> <span class="fu">var.test</span>(bd9<span class="sc">$</span>hospital_1, bd9<span class="sc">$</span>hospital_2, </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="st">"greater"</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O F-test foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test1<span class="sc">$</span>statistic[[<span class="dv">1</span>]],<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O F-test foi de: 1.423</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O p-valor foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test1<span class="sc">$</span>p.value,<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O p-valor foi de: 0.225</code></pre>
+</div>
+</div>
+<p>Perceba que o resultado não é estatisticamente significante.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> sjPlot<span class="sc">::</span><span class="fu">dist_f</span>(<span class="at">f =</span> <span class="fl">1.423</span>, <span class="at">deg.f1 =</span> <span class="dv">19</span>, <span class="at">deg.f2 =</span> <span class="dv">19</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="introducao_estatistica_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>Com o F-teste não podemos rejeitar H0 em favor de H1.</p>
+<p>Passo agora a trabalhar com a estatística t (<em>t-test</em>). Lembrando que o teste-t para amostras com duas variâncias distintas precisa ser especificado o <em>var-equal</em>.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>var_test1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(bd9<span class="sc">$</span>hospital_1, bd9<span class="sc">$</span>hospital_2, </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="st">"greater"</span>, <span class="at">conf.level =</span> <span class="fl">0.90</span>, <span class="at">var.equal=</span> <span class="cn">FALSE</span>)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O t-test foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test1<span class="sc">$</span>statistic[[<span class="dv">1</span>]],<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O t-test foi de: 6.921</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O p-valor foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test1<span class="sc">$</span>p.value,<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O p-valor foi de: 0</code></pre>
+</div>
+</div>
+<p>Com o t-teste podemos rejeitar H0 em favor de H1.</p>
+<p>Calculando os intervalos de confiança rapidamente</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>conf_int_h1 <span class="ot">&lt;-</span> <span class="fu">confint</span>(<span class="fu">lm</span>(bd9<span class="sc">$</span>hospital_1 <span class="sc">~</span> <span class="dv">1</span>), <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O intervalo de confiança para o Hospital 1 foi de: "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(conf_int_h1[[<span class="dv">1</span>]],<span class="dv">2</span>), {<span class="st">" - "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(conf_int_h1[[<span class="dv">2</span>]],<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O intervalo de confiança para o Hospital 1 foi de: 76.96 - 86.04</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>conf_int_h2 <span class="ot">&lt;-</span> <span class="fu">confint</span>(<span class="fu">lm</span>(bd9<span class="sc">$</span>hospital_2 <span class="sc">~</span> <span class="dv">1</span>), <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O intervalo de confiança para o Hospital 2 foi de: "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(conf_int_h2[[<span class="dv">1</span>]],<span class="dv">2</span>), {<span class="st">" - "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(conf_int_h2[[<span class="dv">2</span>]],<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O intervalo de confiança para o Hospital 2 foi de: 54 - 61.6</code></pre>
+</div>
+</div>
+<p>Calculando os intervalos de confiança manualmente</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>mean_value_h1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(bd9<span class="sc">$</span>hospital_1)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>mean_value_h2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(bd9<span class="sc">$</span>hospital_2)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the size</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(bd9<span class="sc">$</span>hospital_1)</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the standard deviation</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>standard_deviation_h1 <span class="ot">&lt;-</span> <span class="fu">sd</span>(bd9<span class="sc">$</span>hospital_1)</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>standard_deviation_h2 <span class="ot">&lt;-</span> <span class="fu">sd</span>(bd9<span class="sc">$</span>hospital_2)</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the standard error</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>standard_error_h1 <span class="ot">&lt;-</span> standard_deviation_h1 <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>standard_error_h2 <span class="ot">&lt;-</span> standard_deviation_h2 <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.1</span></span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>degrees_of_freedom <span class="ot">=</span> n <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>t_score <span class="ot">=</span> <span class="fu">qt</span>(<span class="at">p=</span>alpha<span class="sc">/</span><span class="dv">2</span>, <span class="at">df=</span>degrees_of_freedom, <span class="at">lower.tail=</span>F)</span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>margin_error_h1 <span class="ot">&lt;-</span> t_score <span class="sc">*</span> standard_error_h1</span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>margin_error_h2 <span class="ot">&lt;-</span> t_score <span class="sc">*</span> standard_error_h2</span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculating lower bound and upper bound</span></span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a>lower_bound_h1 <span class="ot">&lt;-</span> mean_value_h1 <span class="sc">-</span> margin_error_h1</span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>upper_bound_h1 <span class="ot">&lt;-</span> mean_value_h1 <span class="sc">+</span> margin_error_h1</span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>lower_bound_h2 <span class="ot">&lt;-</span> mean_value_h2 <span class="sc">-</span> margin_error_h2</span>
+<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>upper_bound_h2 <span class="ot">&lt;-</span> mean_value_h2 <span class="sc">+</span> margin_error_h2</span>
+<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the confidence interval</span></span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(lower_bound_h1,upper_bound_h1))</span>
+<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">c</span>(lower_bound_h2,upper_bound_h2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
 
 </main>
