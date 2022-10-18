@@ -133,7 +133,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalando pacotes</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(<span class="st">"pacman"</span>)) <span class="fu">install.packages</span>(<span class="st">"pacman"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, here, readxl, janitor, dplyr, magrittr, psych, gt, kableExtra, glue, Rlab, tibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>               here, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>               readxl, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>               janitor, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>               dplyr, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>               magrittr, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>               psych, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>               gt, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>               kableExtra, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>               glue, </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>               Rlab, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>               tibble, </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>               sjPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="lista-de-exercícios" class="level2">
@@ -629,6 +641,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>[1] "Podemos rejeitar H0"</code></pre>
 </div>
 </div>
+<ol start="8" type="1">
+<li>Foram coletados dados sobre a quantidade de chuva por dia (em milímetros), durante 14 dias, para dois locais distintos. O pesquisador notou que o local <strong>A</strong> aparenta ter maior variabilidade na quantidade chuva, comparativamente ao local <strong>B</strong>. Neste sentido, deseja testar a hipótese de que a variabilidade na quantidade de chuva é significativamente maior em <strong>A</strong> do que em <strong>B</strong>. Realize o teste F para testar tal hipótese.</li>
+</ol>
+<p>Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 8.</p>
+<p>Se é para analisar a variância, utilizaremos o teste da Distribuição F de Snedecor. Ver slide 62</p>
+<p>Vamos importar os dados</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importando o banco</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>path <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"Lista de Exercícios - Complementares.xlsx"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>bd8 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(path, <span class="at">sheet =</span> <span class="dv">8</span>, <span class="at">range =</span> <span class="fu">cell_cols</span>(<span class="st">"A:B"</span>))</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>bd8 <span class="ot">&lt;-</span> bd8 <span class="sc">%&gt;%</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>bd8 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Calculando a variância de <strong>A</strong> e <strong>B</strong>. Variância = <span class="math inline">\(\sigma^{2}\)</span> / Variância amotral = <span class="math inline">\(s^{2}\)</span>, em que <span class="math inline">\(\sigma\)</span> é o desvio padrão. Então a variância é o desvio padrão ao quadrado.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>var_a <span class="ot">&lt;-</span> <span class="fu">var</span>(bd8<span class="sc">$</span>local_a_mm)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>var_b <span class="ot">&lt;-</span> <span class="fu">var</span>(bd8<span class="sc">$</span>local_b_mm)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Testando diretamente sem precisar calcular a variância de cada variável</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>var_test1 <span class="ot">&lt;-</span> <span class="fu">var.test</span>(bd8<span class="sc">$</span>local_a_mm, bd8<span class="sc">$</span>local_b_mm, </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">"greater"</span>))</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O F-test foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test1<span class="sc">$</span>statistic[[<span class="dv">1</span>]],<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O F-test foi de: 2.7612</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O p-valor foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test1<span class="sc">$</span>p.value,<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O p-valor foi de: 0.0392</code></pre>
+</div>
+</div>
+<p>Perceba que o resultado acima bate com a planilha do Excel. Isso significa que o professor utilizou o F-test unicaudal (<em>greater</em>).</p>
+<p>Vamos testar o bicauda.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>var_test2 <span class="ot">&lt;-</span> <span class="fu">var.test</span>(bd8<span class="sc">$</span>local_a_mm, bd8<span class="sc">$</span>local_b_mm, </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="fu">c</span>(<span class="st">"two.sided"</span>))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O F-test foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test2<span class="sc">$</span>statistic[[<span class="dv">1</span>]],<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O F-test foi de: 2.7612</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>({<span class="st">"O p-valor foi de:"</span>}, {<span class="st">" "</span>}, janitor<span class="sc">::</span><span class="fu">round_half_up</span>(var_test2<span class="sc">$</span>p.value,<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>O p-valor foi de: 0.0783</code></pre>
+</div>
+</div>
+<p>Perceba que a estatística F é igual em ambos os testes (2.7611813). O que muda são os p-valores. PErceba que no teste unicaudal o p-valor é a metade do p-valor do teste bicaudal (0.03917 e 0.07834). Nesse caso eu prefiro fazer o teste bicaudal por ele ser mais conservador, ou seja, ele nos dá mais certeza se realmente podemos rejeitar a hipótese nula (H0) em favor da alternativa. O teste bicaudal é recomendado quando queremos testar se há diferença, sem especificar, se essa diferença é para mais ou para menos. Como o exercício pede para testar se a variabilidade no local<strong>A</strong> é maior do que no local <strong>B</strong>, podemos usar o teste unicaudal.</p>
+<p>Vamos plotar para ver qual área representa um diferença estatisticamente significante?</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>plot <span class="ot">&lt;-</span> sjPlot<span class="sc">::</span><span class="fu">dist_f</span>(<span class="at">f =</span> <span class="fl">2.7612</span>, <span class="at">deg.f1 =</span> <span class="dv">13</span>, <span class="at">deg.f2 =</span> <span class="dv">13</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>plot <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="introducao_estatistica_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>Perceba que o valor F = 2.58 representa o valor crítico. No Excel está 2.577. Então, toda a área colorida representa os valores de F para diferenças esttisticamente significantes.</p>
 </section>
 
 </main>

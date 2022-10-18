@@ -12,7 +12,19 @@ format:
 ```{r, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 # Instalando pacotes
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, here, readxl, janitor, dplyr, magrittr, psych, gt, kableExtra, glue, Rlab, tibble)
+pacman::p_load(tidyverse,
+               here, 
+               readxl, 
+               janitor, 
+               dplyr, 
+               magrittr, 
+               psych, 
+               gt, 
+               kableExtra, 
+               glue, 
+               Rlab, 
+               tibble, 
+               sjPlot)
 ```
 
 ## Lista de Exercícios
@@ -324,4 +336,68 @@ if(x <= z) {print("Não podemos rejeitar H0")}
 
 h_teste(bd$chi_2_total, bd$critico)
 ```
+
+
+8. Foram coletados dados sobre a quantidade de chuva por dia (em milímetros), durante 14 dias, para dois locais distintos. O pesquisador notou que o local **A** aparenta ter maior variabilidade na quantidade chuva, comparativamente ao local **B**. Neste sentido, deseja testar a hipótese de que a variabilidade na quantidade de chuva é significativamente maior em **A** do que em **B**. Realize o teste F para testar tal hipótese. 
+
+Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 8.
+
+
+Se é para analisar a variância, utilizaremos o teste da Distribuição F de Snedecor. Ver slide 62
+
+Vamos importar os dados
+
+```{r ex8, warning=FALSE, message=FALSE, results='hide', error=FALSE}
+# Importando o banco
+path <- here::here("dados", "Lista de Exercícios - Complementares.xlsx")
+bd8 <- readxl::read_excel(path, sheet = 8, range = cell_cols("A:B"))
+bd8 <- bd8 %>% janitor::clean_names()
+bd8 %>% glimpse()
+```
+
+Calculando a variância de **A** e **B**. Variância = $\sigma^{2}$ / Variância amotral = $s^{2}$, em que $\sigma$ é o desvio padrão. Então a variância é o desvio padrão ao quadrado.
+
+```{r}
+var_a <- var(bd8$local_a_mm)
+var_b <- var(bd8$local_b_mm)
+
+# Testando diretamente sem precisar calcular a variância de cada variável
+var_test1 <- var.test(bd8$local_a_mm, bd8$local_b_mm, 
+         alternative = c("greater"))
+
+glue::glue({"O F-test foi de:"}, {" "}, janitor::round_half_up(var_test1$statistic[[1]],4))
+glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test1$p.value,4))
+
+```
+
+Perceba que o resultado acima bate com a planilha do Excel. Isso significa que o professor utilizou o F-test unicaudal (*greater*).
+
+Vamos testar o bicauda.
+
+```{r}
+var_test2 <- var.test(bd8$local_a_mm, bd8$local_b_mm, 
+         alternative = c("two.sided"))
+
+glue::glue({"O F-test foi de:"}, {" "}, janitor::round_half_up(var_test2$statistic[[1]],4))
+glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test2$p.value,4))
+
+```
+
+Perceba que a estatística F é igual em ambos os testes (`r var_test2$statistic[[1]]`). O que muda são os p-valores. PErceba que no teste unicaudal o p-valor é a metade do p-valor do teste bicaudal (`r janitor::round_half_up(var_test1$p.value,5)` e `r janitor::round_half_up(var_test2$p.value,5)`). Nesse caso eu prefiro fazer o teste bicaudal por ele ser mais conservador, ou seja, ele nos dá mais certeza se realmente podemos rejeitar a hipótese nula (H0) em favor da alternativa. O teste bicaudal é recomendado quando queremos testar se há diferença, sem especificar, se essa diferença é para mais ou para menos. Como o exercício pede para testar se a variabilidade no local **A** é maior do que no local **B**, podemos usar o teste unicaudal.
+
+Vamos plotar para ver qual área representa um diferença estatisticamente significante?
+
+```{r, results = 'hide', fig.show='hide'}
+plot <- sjPlot::dist_f(f = 2.7612, deg.f1 = 13, deg.f2 = 13)
+
+```
+
+```{r}
+plot + theme_bw()
+```
+
+Perceba que o valor F = 2.58 representa o valor crítico. No Excel está 2.577. Então, toda a área colorida representa os valores de F para diferenças esttisticamente significantes.
+
+
+9. (Fonte Fávero e Belfiore, 2017 Cap 7) Deseja se comparar o tempo médio de espera para atendimento (min) em 2 hospitais. Para isso, coletou-se uma amostra com 20 pacientes em cada hospital. Verifique se há diferenças entre os tempos médios de espera nos dois hospitais. Considere $\alpha = 1$. Adicionalmente, calcule os intervalos de confiança para o tempo médio de espera nos dois hospitais. Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 9.
 
