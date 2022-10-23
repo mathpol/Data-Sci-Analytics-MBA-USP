@@ -68,9 +68,9 @@ A metodologia do curso está fundamentada na interação entre teoria e prática
 
 ### Módulo Introdutório (em curso)
 
-- Estatística $\checkmark$ (04/10 - 21/10)
+- [$\checkmark$] Estatística (04/10 - 21/10)
 
-- Introdução ao Software R e Introdução ao Machine Learning
+- [] Introdução ao Software R e Introdução ao Machine Learning
 
 ### Data Science e Big Data no Ambiente de Negócios
 
