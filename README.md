@@ -2,7 +2,7 @@
 
 # MBA USP ESALQ
 
-![MBA](mba.png) ![Tidy](tidy1.png)
+![MBA](mba.png)
 
 Anotações e exercícios do MBA em Data Science e Analytics pela ESALQ USP
 
