@@ -1,8 +1,8 @@
 # MBA Data Science & Analytics
 
-USP ESALQ
+**USP ESALQ**
 
-2022/2 - 2024/1
+**Período: 2022/2 - 2024/1**
 
 <p align="center">
   <img src="https://miro.medium.com/max/1360/0*7Q3yvSIv_t0ioJ-Z.gif" />
