@@ -3,7 +3,7 @@
 # MBA USP ESALQ
 
 <p align="center">
-  <img src="https://pbs.twimg.com/profile_images/1495840557289123849/RtQt3bsT_400x400.png" />
+  <img src="https://miro.medium.com/max/1360/0*7Q3yvSIv_t0ioJ-Z.gif" />
 </p>
 
 Anotações e exercícios do MBA em Data Science e Analytics pela ESALQ USP
