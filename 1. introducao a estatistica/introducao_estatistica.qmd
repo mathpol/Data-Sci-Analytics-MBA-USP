@@ -15,6 +15,8 @@ format:
     code-tools: true
     code-line-numbers: true
 toc-title: "Sumário"
+editor_options: 
+  chunk_output_type: console
 ---
 
 ::: panel-tabset
@@ -36,6 +38,7 @@ pacman::p_load(tidyverse,
                Rlab, 
                tibble, 
                sjPlot)
+options(OutDec=",")
 ```
 
 ### Python
@@ -837,3 +840,75 @@ critico <- formatC(qt(p = conf/2 , df = n_amos-1, lower.tail = F))
 :::
 
 Resposta: `r glue::glue({"como o valor calculado para a estatística t está na região crítica ("}, janitor::round_half_up(estatistica_t,3), {"), rejeita-se a hipótese nula de que as quantidades de calorias são iguais."})`
+
+
+## Questão 11
+
+
+Em uma indústria alimentícia, para a preparação de certo produto, a quantidade padrão de sal são 8g com
+desvio padrão igual a 1 g. Na análise de uma amostra de 85 produtos, foi observada uma quantidade média de
+sal de 8,25g. Avalie se a quantidade observada na amostra pode ser considerada estatisticamente maior, ao
+nível de significância de 5%.
+
+::: panel-tabset
+### R
+
+```{r}
+n_amos <- 85
+pote <- 8
+media_am <- 8.25
+desv_pad <- 1
+conf <- .05
+
+#Calculando a estatística t
+estatistica_t <- (media_am - pote)/(desv_pad/(sqrt(n_amos)))
+
+# Encontrando o p-valor
+p_valor <- pt(q = estatistica_t, df = n_amos-1, lower.tail = F)
+p_valor # p < 0.05 já é possível rejeitar H0
+
+# Encontrando o valor crítico. Vamos dividir conf por 2 porque é um teste bicaudal. Se estamos falando de 95% de confiança em um teste bicaudal, então precisamos considerar os dois lados da curva. Portanto, precisamos calcular 0.05/2. Isso quer dizer que estamos considerando 0.025 de uma lado e 0.025 do outro.
+critico <- qnorm(p=.95) 
+critico
+```
+
+### Python
+
+```{python}
+
+```
+:::
+
+**Resposta**: `r glue::glue({"como o valor calculado para a estatística t está na região crítica ("}, janitor::round_half_up(estatistica_t,3), {"), rejeita-se a hipótese nula de que as quantidades de calorias são iguais."})`
+
+
+## Questão 12
+
+Em uma amostra de 425 medições, observou se que o peso médio dos produtos que foram medidos é 226 g, com desvio padrão de 10 g. Estabeleça o intervalo de confiança para esta média, sabendo que o desvio padrão observado é exatamente seu valor histórico Considere um nível de confiança de 95%.
+
+Se temos uma amostra "grande" e com variância conhecida, utilizaremos a tabela de distribuição $Z$ e não $t$. Lembrando: variância = (desvio padrão)².
+
+
+::: panel-tabset
+### R
+
+```{r}
+n <- 425
+peso_medio <- 226
+desvio_pad <- 10
+z_critico <- qnorm(p=.975)
+
+ci_upper <- peso_medio + (z_critico*(desvio_pad/sqrt(n)))
+ci_lower <- peso_medio - (z_critico*(desvio_pad/sqrt(n)))
+```
+
+
+### Python
+
+```{python}
+
+```
+
+:::
+
+**Resposta**: O intervalo de confiança varia entre `r janitor::round_half_up(ci_lower, 2)` e `r janitor::round_half_up(ci_upper,2)`.
