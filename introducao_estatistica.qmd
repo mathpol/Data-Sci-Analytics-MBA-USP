@@ -1,13 +1,25 @@
 ---
 title: "Introdução à Estatística"
+subtitle: "MBA Data Science & Analytics - USP ESALQ"
+date: "today"
 author: "Matheus Ferreira"
 editor: visual
 format:
   html:
+    toc: true
+    toc-location: left
     fig-width: 8
     fig-height: 4
     code-fold: true
+    code-copy: true
+    code-tools: true
+    code-line-numbers: true
+toc-title: "Sumário"
 ---
+
+::: {.panel-tabset}
+
+### R
 
 ```{r, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 # Instalando pacotes
@@ -27,11 +39,20 @@ pacman::p_load(tidyverse,
                sjPlot)
 ```
 
-## Lista de Exercícios
+:::
+
+
+# Lista de Exercícios
 
 **O banco de dados está na planilha Lista de Exercício Complementares: aba Exercício 1.**
 
-1.  Na análise de concessão de empréstimos, uma variável potencialmente importante é a renda da pessoa. O gerente de um banco coleta uma base de dados de seus correntistas e extrai a variável "renda mensal (R\$)" para 50 pessoas. Embora se trate de uma variável quantitativa, deseja realizar uma análise por meio de tabela de frequências. Neste sentido, pede-se:
+### Questão 1.  
+
+Na análise de concessão de empréstimos, uma variável potencialmente importante é a renda da pessoa. O gerente de um banco coleta uma base de dados de seus correntistas e extrai a variável "renda mensal (R\$)" para 50 pessoas. Embora se trate de uma variável quantitativa, deseja realizar uma análise por meio de tabela de frequências. Neste sentido, pede-se:
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex1, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 # Importando o banco
@@ -40,8 +61,13 @@ bd1 <- readxl::read_excel(path, sheet = 1, range = cell_cols("A:B"))
 bd1 <- bd1 %>% janitor::clean_names()
 bd1 %>% glimpse()
 ```
+:::
 
 a\) Classifique os correntistas em faixas de renda, sendo: 0-2.000; 2.001-4.000; 4.001- 6.000; 6.001-8.000; 8.001-10.000 e 10.001-12.000.
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex1_a, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 bd1 <- bd1 |> 
@@ -56,8 +82,15 @@ bd1 <- bd1 |>
 bd1 |> glimpse()
 
 ```
+:::
+
 
 b\) Em seguida, elabore a tabela de frequências para as faixas de renda acima.
+
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex1_b, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 bd1 |> group_by(fx_renda) |>
@@ -79,9 +112,19 @@ bd1 |> group_by(fx_renda) |>
 
 ```
 
-2.Um analista do mercado acionário coletou os retornos mensais de duas ações que pretende indicar aos seus clientes. Calcule as estatísticas descritivas para as duas variáveis, incluindo o coeficiente de correlação entre os retornos. O banco de dados com os retornos percentuais mensais está na planilha Lista de Exercício Complementares: aba Exercício 2.
+:::
+
+### Questão 2.
+
+Um analista do mercado acionário coletou os retornos mensais de duas ações que pretende indicar aos seus clientes. Calcule as estatísticas descritivas para as duas variáveis, incluindo o coeficiente de correlação entre os retornos. O banco de dados com os retornos percentuais mensais está na planilha Lista de Exercício Complementares: aba Exercício 2.
 
 Estatísticas descritivas: média, mediana, moda, quartis, decis, valor mínimo, valor máximo, amplitude, variância, desvio padrão, erro padrão, coeficiente de variação
+
+
+::: {.panel-tabset}
+
+### R
+
 
 ```{r ex2, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 # Importando o banco
@@ -159,11 +202,20 @@ table2 |> select(-1) |> kableExtra::kbl(caption = "Estatísticas Descritivas Ex.
   kableExtra::kable_classic(full_width = F, html_font = "Cambria")
 ```
 
-3.  Em certo jogo, probabilidade de vitória (sucesso) a cada nova jogada é 1/6. Se forem feitas 10 jogadas, quais são as seguintes probabilidades:
+:::
+
+## Questão 3.
+
+Em certo jogo, probabilidade de vitória (sucesso) a cada nova jogada é 1/6. Se forem feitas 10 jogadas, quais são as seguintes probabilidades:
 
 a)  Ter vitória em 4 jogadas.
 
 A fórmula a ser usada é a da Distribuição Normal (p. 44 dos slides)
+
+::: {.panel-tabset}
+
+### R
+
 
 ```{r ex3_a, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 # Criando a função binomial
@@ -179,7 +231,15 @@ k <- 4
 glue::glue({"Resposta:"}, {" "}, janitor::round_half_up(dist_bin(n,k,p)*100,4), {"%"})
 ```
 
+:::
+
+
 b)  Ter vitória em **pelo menos** 7 jogadas
+
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex3_b, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 k1 <- 7
@@ -195,11 +255,20 @@ r4 <- janitor::round_half_up(dist_bin(n,k4,p)*100,4)
 glue::glue({"Resposta:"}, {" "}, r1 + r2 + r3 + r4, {"%"})
 ```
 
-4.  (Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que um aluno acerte três questões a cada cinco testes Seja X o número de tentativas até o décimo segundo acerto. Determine a probabilidade de que o aluno precise fazer 20 questões para acertar 12.
+
+:::
+
+## Questão 4.
+
+(Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que um aluno acerte três questões a cada cinco testes Seja X o número de tentativas até o décimo segundo acerto. Determine a probabilidade de que o aluno precise fazer 20 questões para acertar 12.
 
 Nessa questão trabalharemos com Distribuião Binimial Negativa (DBN).
 
 Quando pergunta sobre **quantas rodadas** e não sobre **quantos acertos** estamos diante de casos de DBN.
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex4, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 dist_bin_neg <- function(n,k,p,gl){
@@ -216,7 +285,13 @@ glue::glue({"Resposta:"}, {" "}, round_half_up(dist_bin_neg(n,k,p,gl)*100,2), {"
 
 ```
 
+:::
+
 Veja agora uma coisa muito mais fácil. Existe uma função no R chamada *dnbinomial*.
+
+::: {.panel-tabset}
+
+### R
 
 ```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 
@@ -224,7 +299,16 @@ glue::glue({"Resposta: "}, {""}, round_half_up(dnbinom(n-k, k, p)*100,2), {"%"})
 
 ```
 
-5.  (Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que, em determinado hospital, 3 clientes são operados diariamente de cirurgia do estômago, seguindo uma distribuição Poisson. Calcule a probabilidade de que 28 clientes sejam operados na próxima semana (7 dias úteis).
+:::
+
+## Questão 5.
+
+(Fonte Fávero e Belfiore, 2017 Cap. 5) Suponha que, em determinado hospital, 3 clientes são operados diariamente de cirurgia do estômago, seguindo uma distribuição Poisson. Calcule a probabilidade de que 28 clientes sejam operados na próxima semana (7 dias úteis).
+
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex5, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 fun_poisson <- function(n,k){
@@ -239,24 +323,43 @@ fun_poisson(n,k)
 
 ```
 
+:::
+
 Agora, um jeito muito mais fácil. Utilizamos a função *dpois* (*R Native*)
+
+
+::: {.panel-tabset}
+
+### R
 
 ```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 glue::glue({"Resposta: "}, {""}, round_half_up(dpois(k,n)*100,3), {"%"})
 ```
 
-6.  Nos últimos meses, foram feitas medições do tempo decorrido entre o início e finalização de uma das etapas do processo de produção de certo produto. O tempo médio foi calculado em 26,5 minutos e o desvio padrão foi de 4,0 minutos. Sabendo que tal variável segue uma distribuição normal, identifique as seguintes informações:
+:::
+
+## Questão 6.
+
+Nos últimos meses, foram feitas medições do tempo decorrido entre o início e finalização de uma das etapas do processo de produção de certo produto. O tempo médio foi calculado em 26,5 minutos e o desvio padrão foi de 4,0 minutos. Sabendo que tal variável segue uma distribuição normal, identifique as seguintes informações:
 
 
 Teremos que trabalhar com Z score
 
+::: {.panel-tabset}
+
+### R
 ```{r ex6, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 media <- 26.5
 sd <- 4
 ```
 
+:::
 
 a)  P(X\>37)
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex6_a, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 p37 <- 37
@@ -264,8 +367,13 @@ z37 <- (p37-media)/sd
 glue::glue({"P(X>37) = "},janitor::round_half_up(pnorm(p37, media, sd, lower.tail=FALSE),4))
 ```
 
+:::
 
 b)  P(X\<20)
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex6_b, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 p20 <- 20
@@ -273,8 +381,14 @@ z20 <- (p20-media)/sd
 glue::glue({"P(X<20) = "},janitor::round_half_up(pnorm(p20, media, sd, lower.tail=TRUE),4)) # Se é Menor que, temos que trabalhar com lower.tail.
 ```
 
+:::
+
 
 c)  P(22\<X\<28)
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex6_c, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 p22 <- 22
@@ -291,11 +405,15 @@ glue::glue({"P(22<x<28) = "},p_b - p_a)
 
 ```
 
+:::
 
-7. (Fonte Fávero e Belfiore, 2017 Cap. 8) Um grupo de 60 leitores fez uma avaliação de três livros de romance
-e, ao final, escolheram uma das três opções. Teste a hipótese nula de que não há diferença na preferência dos
-leitores, ao nível de significância de 5% (*p < 0.05*). Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 7.
+## Questão 7.
 
+(Fonte Fávero e Belfiore, 2017 Cap. 8) Um grupo de 60 leitores fez uma avaliação de três livros de romance e, ao final, escolheram uma das três opções. Teste a hipótese nula de que não há diferença na preferência dos leitores, ao nível de significância de 5% (*p < 0.05*). Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 7.
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex7, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 bd <- tibble::tibble(livro = c("A", "B", "C"),
@@ -306,7 +424,15 @@ bd <- tibble::tibble(livro = c("A", "B", "C"),
 
 ```
 
+:::
+
+
 Construindo a função para a estatística qui-quadrado ($\chi^{2}$)
+
+
+::: {.panel-tabset}
+
+### R
 
 ```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 chi2 <- function(x,z){
@@ -327,7 +453,14 @@ bd$critico <- critico
 bd$p_valor <- pchisq(6.1, 2, lower.tail = FALSE)
 ```
 
+:::
+
 Realizando o teste de hipótese
+
+
+::: {.panel-tabset}
+
+### R
 ```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 h_teste <- function(x,z){
   if(x > z) {print("Podemos rejeitar H0")}
@@ -337,8 +470,12 @@ if(x <= z) {print("Não podemos rejeitar H0")}
 h_teste(bd$chi_2_total, bd$critico)
 ```
 
+:::
 
-8. Foram coletados dados sobre a quantidade de chuva por dia (em milímetros), durante 14 dias, para dois locais distintos. O pesquisador notou que o local **A** aparenta ter maior variabilidade na quantidade chuva, comparativamente ao local **B**. Neste sentido, deseja testar a hipótese de que a variabilidade na quantidade de chuva é significativamente maior em **A** do que em **B**. Realize o teste F para testar tal hipótese. 
+
+## Questão 8.
+
+Foram coletados dados sobre a quantidade de chuva por dia (em milímetros), durante 14 dias, para dois locais distintos. O pesquisador notou que o local **A** aparenta ter maior variabilidade na quantidade chuva, comparativamente ao local **B**. Neste sentido, deseja testar a hipótese de que a variabilidade na quantidade de chuva é significativamente maior em **A** do que em **B**. Realize o teste F para testar tal hipótese. 
 
 Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 8.
 
@@ -346,6 +483,10 @@ Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba
 Se é para analisar a variância, utilizaremos o teste da Distribuição F de Snedecor. Ver slide 62
 
 Vamos importar os dados
+
+::: {.panel-tabset}
+
+### R
 
 ```{r ex8, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 # Importando o banco
@@ -355,7 +496,14 @@ bd8 <- bd8 %>% janitor::clean_names()
 bd8 %>% glimpse()
 ```
 
+
+:::
+
 Calculando a variância de **A** e **B**. Variância = $\sigma^{2}$ / Variância amotral = $s^{2}$, em que $\sigma$ é o desvio padrão. Então a variância é o desvio padrão ao quadrado.
+
+::: {.panel-tabset}
+
+### R
 
 ```{r}
 var_a <- var(bd8$local_a_mm)
@@ -370,9 +518,15 @@ glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test1$p.valu
 
 ```
 
+:::
+
 Perceba que o resultado acima bate com a planilha do Excel. Isso significa que o professor utilizou o F-test unicaudal (*greater*).
 
 Vamos testar o bicauda.
+
+::: {.panel-tabset}
+
+### R
 
 ```{r}
 var_test2 <- var.test(bd8$local_a_mm, bd8$local_b_mm, 
@@ -383,10 +537,16 @@ glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test2$p.valu
 
 ```
 
+
+:::
+
 Perceba que a estatística F é igual em ambos os testes (`r var_test2$statistic[[1]]`). O que muda são os p-valores. PErceba que no teste unicaudal o p-valor é a metade do p-valor do teste bicaudal (`r janitor::round_half_up(var_test1$p.value,5)` e `r janitor::round_half_up(var_test2$p.value,5)`). Nesse caso eu prefiro fazer o teste bicaudal por ele ser mais conservador, ou seja, ele nos dá mais certeza se realmente podemos rejeitar a hipótese nula (H0) em favor da alternativa. O teste bicaudal é recomendado quando queremos testar se há diferença, sem especificar, se essa diferença é para mais ou para menos. Como o exercício pede para testar se a variabilidade no local **A** é maior do que no local **B**, podemos usar o teste unicaudal.
 
 Vamos plotar para ver qual área representa um diferença estatisticamente significante?
 
+::: {.panel-tabset}
+
+### R
 ```{r, results = 'hide', fig.show='hide'}
 plot <- sjPlot::dist_f(f = 2.7612, deg.f1 = 13, deg.f2 = 13)
 
@@ -396,10 +556,19 @@ plot <- sjPlot::dist_f(f = 2.7612, deg.f1 = 13, deg.f2 = 13)
 plot + theme_bw()
 ```
 
+:::
+
 Perceba que o valor F = 2.58 representa o valor crítico. No Excel está 2.577. Então, toda a área colorida representa os valores de F para diferenças esttisticamente significantes.
 
 
-9. (Fonte Fávero e Belfiore, 2017 Cap. 7) Deseja-se comparar o tempo médio de espera para atendimento (min) em 2 hospitais. Para isso, coletou-se uma amostra com 20 pacientes em cada hospital. Verifique se há diferenças entre os tempos médios de espera nos dois hospitais. Considere $\alpha = 1$. Adicionalmente, calcule os intervalos de confiança para o tempo médio de espera nos dois hospitais. Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 9.
+## Questão 9.
+
+(Fonte Fávero e Belfiore, 2017 Cap. 7) Deseja-se comparar o tempo médio de espera para atendimento (min) em 2 hospitais. Para isso, coletou-se uma amostra com 20 pacientes em cada hospital. Verifique se há diferenças entre os tempos médios de espera nos dois hospitais. Considere $\alpha = 1$. Adicionalmente, calcule os intervalos de confiança para o tempo médio de espera nos dois hospitais. Os dados estão disponíveis na planilha Lista de Exercício Complementares: aba Exercício 9.
+
+::: {.panel-tabset}
+
+### R
+
 
 ```{r ex9, warning=FALSE, message=FALSE, results='hide', error=FALSE}
 # Importando o banco
@@ -409,8 +578,14 @@ bd9 <- bd9 %>% janitor::clean_names()
 bd9 %>% glimpse()
 ```
 
+:::
 
 O exercício começa pela estatística F.
+
+
+::: {.panel-tabset}
+
+### R
 
 ```{r}
 var_test1 <- var.test(bd9$hospital_1, bd9$hospital_2, 
@@ -419,9 +594,13 @@ var_test1 <- var.test(bd9$hospital_1, bd9$hospital_2,
 glue::glue({"O F-test foi de:"}, {" "}, janitor::round_half_up(var_test1$statistic[[1]],3))
 glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test1$p.value,3))
 ```
-
+:::
 
 Perceba que o resultado não é estatisticamente significante.
+
+::: {.panel-tabset}
+
+### R
 
 ```{r, results = 'hide', fig.show='hide'}
 plot <- sjPlot::dist_f(f = 1.423, deg.f1 = 19, deg.f2 = 19)
@@ -432,9 +611,15 @@ plot <- sjPlot::dist_f(f = 1.423, deg.f1 = 19, deg.f2 = 19)
 plot + theme_bw()
 ```
 
+:::
+
 Com o F-teste não podemos rejeitar H0 em favor de H1.
 
 Passo agora a trabalhar com a estatística t (*t-test*). Lembrando que o teste-t para amostras com duas variâncias distintas precisa ser especificado o *var-equal*.
+
+::: {.panel-tabset}
+
+### R
 
 ```{r}
 var_test1 <- t.test(bd9$hospital_1, bd9$hospital_2, 
@@ -444,10 +629,17 @@ glue::glue({"O t-test foi de:"}, {" "}, janitor::round_half_up(var_test1$statist
 glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test1$p.value,3))
 ```
 
+:::
+
+
 Com o t-teste podemos rejeitar H0 em favor de H1.
 
 
 Calculando os intervalos de confiança rapidamente
+
+::: {.panel-tabset}
+
+### R
 
 ```{r}
 conf_int_h1 <- confint(lm(bd9$hospital_1 ~ 1), level = 0.90)
@@ -456,9 +648,13 @@ glue::glue({"O intervalo de confiança para o Hospital 1 foi de: "}, janitor::ro
 conf_int_h2 <- confint(lm(bd9$hospital_2 ~ 1), level = 0.90)
 glue::glue({"O intervalo de confiança para o Hospital 2 foi de: "}, janitor::round_half_up(conf_int_h2[[1]],2), {" - "}, janitor::round_half_up(conf_int_h2[[2]],2))
 ```
-
+:::
 
 Calculando os intervalos de confiança manualmente
+
+::: {.panel-tabset}
+
+### R
 
 ```{r, results='hide'}
 mean_value_h1 <- mean(bd9$hospital_1)
@@ -492,9 +688,35 @@ print(c(lower_bound_h1,upper_bound_h1))
 print(c(lower_bound_h2,upper_bound_h2))
 ```
 
+:::
 
+## Questão 10. 
 
+(Fonte Fávero e Belfiore, 2017 Cap. 7) Um fabricante de iogurtes desnatados afirma que a quantidade de calorias em cada pote é 60 cal. Para verificar se essa informação procede, uma amostra aleatória com 36 potes é coletada, observando-se que a quantidade média de calorias é de 65 cal com desvio padrão 3,5. Aplique o teste adequado e verifique se a afirmação do fabricante é verdadeira, considerando o nível de significância de 5%.
 
+::: {.panel-tabset}
 
+### R
+```{r}
+n_amos <- 36
+pote <- 60
+media_am <- 65
+desv_pad <- 3.5
+conf <- .05
+
+#Calculando a estatística t
+estatistica_t <- (media_am - pote)/(desv_pad/(sqrt(n_amos)))
+
+# Encontrando o p-valor
+p_valor <- 2*pt(q = estatistica_t, df = n_amos-1, lower.tail = F)
+p_valor
+
+# Encontrando o valor crítico. Vamos dividir conf por 2 porque é um teste bicaudal. Se estamos falando de 95% de confiança em um teste bicaudal, então precisamos considerar os dois lados da curva. Portanto, precisamos calcular 0.05/2. Isso quer dizer que estamos considerando 0.025 de uma lado e 0.025 do outro.
+critico <- formatC(qt(p = conf/2 , df = n_amos-1, lower.tail = F))  
+```
+
+:::
+
+Resposta: `r glue::glue({"como o valor calculado para a estatística t está na região crítica ("}, janitor::round_half_up(estatistica_t,3), {"), rejeita-se a hipótese nula de que as quantidades de calorias são iguais."})`
 
 
