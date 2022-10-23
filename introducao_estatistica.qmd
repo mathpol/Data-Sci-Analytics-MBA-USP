@@ -39,14 +39,26 @@ pacman::p_load(tidyverse,
                sjPlot)
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 
 # Lista de Exercícios
 
-**O banco de dados está na planilha Lista de Exercício Complementares: aba Exercício 1.**
+**Lista de documentos utilizados**:
 
-### Questão 1.  
+- Slides F. de Estatística I, II e III 07,14 e 19.10.2022
+
+- Lista de Exercícios - Complementares
+
+- Lista de Exercícios - Complementares
+
+## Questão 1.  
 
 Na análise de concessão de empréstimos, uma variável potencialmente importante é a renda da pessoa. O gerente de um banco coleta uma base de dados de seus correntistas e extrai a variável "renda mensal (R\$)" para 50 pessoas. Embora se trate de uma variável quantitativa, deseja realizar uma análise por meio de tabela de frequências. Neste sentido, pede-se:
 
@@ -61,9 +73,18 @@ bd1 <- readxl::read_excel(path, sheet = 1, range = cell_cols("A:B"))
 bd1 <- bd1 %>% janitor::clean_names()
 bd1 %>% glimpse()
 ```
+
+### Python
+
+```{python}
+
+```
+
 :::
 
-a\) Classifique os correntistas em faixas de renda, sendo: 0-2.000; 2.001-4.000; 4.001- 6.000; 6.001-8.000; 8.001-10.000 e 10.001-12.000.
+### a\) 
+
+Classifique os correntistas em faixas de renda, sendo: 0-2.000; 2.001-4.000; 4.001- 6.000; 6.001-8.000; 8.001-10.000 e 10.001-12.000.
 
 ::: {.panel-tabset}
 
@@ -82,10 +103,19 @@ bd1 <- bd1 |>
 bd1 |> glimpse()
 
 ```
+
+### Python
+
+```{python}
+
+```
+
 :::
 
 
-b\) Em seguida, elabore a tabela de frequências para as faixas de renda acima.
+### b\) 
+
+Em seguida, elabore a tabela de frequências para as faixas de renda acima.
 
 
 ::: {.panel-tabset}
@@ -112,9 +142,15 @@ bd1 |> group_by(fx_renda) |>
 
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
-### Questão 2.
+## Questão 2.
 
 Um analista do mercado acionário coletou os retornos mensais de duas ações que pretende indicar aos seus clientes. Calcule as estatísticas descritivas para as duas variáveis, incluindo o coeficiente de correlação entre os retornos. O banco de dados com os retornos percentuais mensais está na planilha Lista de Exercício Complementares: aba Exercício 2.
 
@@ -202,13 +238,21 @@ table2 |> select(-1) |> kableExtra::kbl(caption = "Estatísticas Descritivas Ex.
   kableExtra::kable_classic(full_width = F, html_font = "Cambria")
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 ## Questão 3.
 
 Em certo jogo, probabilidade de vitória (sucesso) a cada nova jogada é 1/6. Se forem feitas 10 jogadas, quais são as seguintes probabilidades:
 
-a)  Ter vitória em 4 jogadas.
+### a)  
+
+Ter vitória em 4 jogadas.
 
 A fórmula a ser usada é a da Distribuição Normal (p. 44 dos slides)
 
@@ -231,10 +275,18 @@ k <- 4
 glue::glue({"Resposta:"}, {" "}, janitor::round_half_up(dist_bin(n,k,p)*100,4), {"%"})
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 
-b)  Ter vitória em **pelo menos** 7 jogadas
+### b)
+
+Ter vitória em **pelo menos** 7 jogadas
 
 
 ::: {.panel-tabset}
@@ -255,6 +307,11 @@ r4 <- janitor::round_half_up(dist_bin(n,k4,p)*100,4)
 glue::glue({"Resposta:"}, {" "}, r1 + r2 + r3 + r4, {"%"})
 ```
 
+### Python
+
+```{python}
+
+```
 
 :::
 
@@ -285,6 +342,12 @@ glue::glue({"Resposta:"}, {" "}, round_half_up(dist_bin_neg(n,k,p,gl)*100,2), {"
 
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 Veja agora uma coisa muito mais fácil. Existe uma função no R chamada *dnbinomial*.
@@ -296,6 +359,12 @@ Veja agora uma coisa muito mais fácil. Existe uma função no R chamada *dnbino
 ```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 
 glue::glue({"Resposta: "}, {""}, round_half_up(dnbinom(n-k, k, p)*100,2), {"%"})
+
+```
+
+### Python
+
+```{python}
 
 ```
 
@@ -323,6 +392,12 @@ fun_poisson(n,k)
 
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 Agora, um jeito muito mais fácil. Utilizamos a função *dpois* (*R Native*)
@@ -334,6 +409,12 @@ Agora, um jeito muito mais fácil. Utilizamos a função *dpois* (*R Native*)
 
 ```{r, warning=FALSE, message=FALSE, results='hold', error=FALSE, out.width="100%"}
 glue::glue({"Resposta: "}, {""}, round_half_up(dpois(k,n)*100,3), {"%"})
+```
+
+### Python
+
+```{python}
+
 ```
 
 :::
@@ -353,9 +434,17 @@ media <- 26.5
 sd <- 4
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
-a)  P(X\>37)
+### a)  
+
+P(X\>37)
 
 ::: {.panel-tabset}
 
@@ -367,9 +456,18 @@ z37 <- (p37-media)/sd
 glue::glue({"P(X>37) = "},janitor::round_half_up(pnorm(p37, media, sd, lower.tail=FALSE),4))
 ```
 
+### Python
+
+```{python}
+
+```
+
+
 :::
 
-b)  P(X\<20)
+### b)  
+
+P(X\<20)
 
 ::: {.panel-tabset}
 
@@ -381,10 +479,18 @@ z20 <- (p20-media)/sd
 glue::glue({"P(X<20) = "},janitor::round_half_up(pnorm(p20, media, sd, lower.tail=TRUE),4)) # Se é Menor que, temos que trabalhar com lower.tail.
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 
-c)  P(22\<X\<28)
+### c)  
+
+P(22\<X\<28)
 
 ::: {.panel-tabset}
 
@@ -405,6 +511,12 @@ glue::glue({"P(22<x<28) = "},p_b - p_a)
 
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 ## Questão 7.
@@ -421,6 +533,12 @@ bd <- tibble::tibble(livro = c("A", "B", "C"),
   mutate(total = sum(freq)) |>
   mutate(prop = (freq/total)) |> 
   mutate(freq_esp = total/length(freq))
+
+```
+
+### Python
+
+```{python}
 
 ```
 
@@ -453,6 +571,12 @@ bd$critico <- critico
 bd$p_valor <- pchisq(6.1, 2, lower.tail = FALSE)
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 Realizando o teste de hipótese
@@ -469,6 +593,13 @@ if(x <= z) {print("Não podemos rejeitar H0")}
 
 h_teste(bd$chi_2_total, bd$critico)
 ```
+
+### Python
+
+```{python}
+
+```
+
 
 :::
 
@@ -496,6 +627,11 @@ bd8 <- bd8 %>% janitor::clean_names()
 bd8 %>% glimpse()
 ```
 
+### Python
+
+```{python}
+
+```
 
 :::
 
@@ -518,6 +654,12 @@ glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test1$p.valu
 
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 Perceba que o resultado acima bate com a planilha do Excel. Isso significa que o professor utilizou o F-test unicaudal (*greater*).
@@ -537,6 +679,11 @@ glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test2$p.valu
 
 ```
 
+### Python
+
+```{python}
+
+```
 
 :::
 
@@ -554,6 +701,12 @@ plot <- sjPlot::dist_f(f = 2.7612, deg.f1 = 13, deg.f2 = 13)
 
 ```{r}
 plot + theme_bw()
+```
+
+### Python
+
+```{python}
+
 ```
 
 :::
@@ -578,6 +731,12 @@ bd9 <- bd9 %>% janitor::clean_names()
 bd9 %>% glimpse()
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 O exercício começa pela estatística F.
@@ -594,6 +753,13 @@ var_test1 <- var.test(bd9$hospital_1, bd9$hospital_2,
 glue::glue({"O F-test foi de:"}, {" "}, janitor::round_half_up(var_test1$statistic[[1]],3))
 glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test1$p.value,3))
 ```
+
+### Python
+
+```{python}
+
+```
+
 :::
 
 Perceba que o resultado não é estatisticamente significante.
@@ -610,6 +776,13 @@ plot <- sjPlot::dist_f(f = 1.423, deg.f1 = 19, deg.f2 = 19)
 ```{r}
 plot + theme_bw()
 ```
+
+### Python
+
+```{python}
+
+```
+
 
 :::
 
@@ -628,6 +801,13 @@ var_test1 <- t.test(bd9$hospital_1, bd9$hospital_2,
 glue::glue({"O t-test foi de:"}, {" "}, janitor::round_half_up(var_test1$statistic[[1]],3))
 glue::glue({"O p-valor foi de:"}, {" "}, janitor::round_half_up(var_test1$p.value,3))
 ```
+
+### Python
+
+```{python}
+
+```
+
 
 :::
 
@@ -648,6 +828,13 @@ glue::glue({"O intervalo de confiança para o Hospital 1 foi de: "}, janitor::ro
 conf_int_h2 <- confint(lm(bd9$hospital_2 ~ 1), level = 0.90)
 glue::glue({"O intervalo de confiança para o Hospital 2 foi de: "}, janitor::round_half_up(conf_int_h2[[1]],2), {" - "}, janitor::round_half_up(conf_int_h2[[2]],2))
 ```
+
+### Python
+
+```{python}
+
+```
+
 :::
 
 Calculando os intervalos de confiança manualmente
@@ -688,6 +875,12 @@ print(c(lower_bound_h1,upper_bound_h1))
 print(c(lower_bound_h2,upper_bound_h2))
 ```
 
+### Python
+
+```{python}
+
+```
+
 :::
 
 ## Questão 10. 
@@ -713,6 +906,13 @@ p_valor
 
 # Encontrando o valor crítico. Vamos dividir conf por 2 porque é um teste bicaudal. Se estamos falando de 95% de confiança em um teste bicaudal, então precisamos considerar os dois lados da curva. Portanto, precisamos calcular 0.05/2. Isso quer dizer que estamos considerando 0.025 de uma lado e 0.025 do outro.
 critico <- formatC(qt(p = conf/2 , df = n_amos-1, lower.tail = F))  
+```
+
+
+### Python
+
+```{python}
+
 ```
 
 :::
