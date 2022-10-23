@@ -2,7 +2,7 @@
 
 # MBA USP ESALQ
 
-![plot]("C:/Users/Matheus Ferreira/Pictures/plot.png")
+![MBA](mba.png)
 
 Anotações e exercícios do MBA em Data Science e Analytics pela ESALQ USP
 
