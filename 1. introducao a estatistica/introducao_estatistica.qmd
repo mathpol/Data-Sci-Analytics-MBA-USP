@@ -911,4 +911,5 @@ ci_lower <- peso_medio - (z_critico*(desvio_pad/sqrt(n)))
 
 :::
 
-**Resposta**: O intervalo de confiança varia entre `r janitor::round_half_up(ci_lower, 2)` e `r janitor::round_half_up(ci_upper,2)`.
+**Resposta**: O valor mais baixo é: `r janitor::round_half_up(ci_lower, 2)`.
+O valor mais alto é: `r janitor::round_half_up(ci_upper,2)`.

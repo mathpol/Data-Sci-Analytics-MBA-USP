@@ -1,12 +1,16 @@
-# Data Science & Analytics
+# MBA Data Science & Analytics
 
-# MBA USP ESALQ
+USP ESALQ
+
+2022/2 - 2024/1
 
 <p align="center">
   <img src="https://miro.medium.com/max/1360/0*7Q3yvSIv_t0ioJ-Z.gif" />
 </p>
 
-Anotações e exercícios do MBA em Data Science e Analytics pela ESALQ USP
+## O repositório
+
+Esse repositório foi criado para acompanhar o MBA em Data Science e Analytics pela ESALQ USP. Nele colocarei as resoluções dos exercícios e tarefas exigidas pelo curso, assim como o desenvolvimento do meu projeto de TCC. Trabalho com R, mas se alguém quiser contibuir com Python será muito bem vinda(o). A ideia é manter esse repositório público para que as pessoas tenham acesso a esse conteúdo. Porém, nem todos os materiais serão disponibilizados, uma vez que a USP ESALQ possui direitos autorais sobre os materiais.
 
 As informações sobre o curso foram retiradas da página do curso <https://mbauspesalq.com/cursos/mba-em-data-science-e-analytics>
 
