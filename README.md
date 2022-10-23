@@ -5,7 +5,7 @@
 **Período: 2022/2 - 2024/1**
 
 <p align="center">
-  <img src="https://miro.medium.com/max/1360/0*7Q3yvSIv_t0ioJ-Z.gif" />
+  <img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.dribbble.com%2Fusers%2F2131993%2Fscreenshots%2F4948736%2Fthoughtworks-gif_dribbble.gif&imgrefurl=https%3A%2F%2Fdribbble.com%2Fshots%2F4948736-UI-Developer&tbnid=PXLAloFJw---QM&vet=1&docid=Vf1wk6-1oospUM&w=800&h=600&itg=1&hl=pt-BR&source=sh%2Fx%2Fim" />
 </p>
 
 ## O repositório
