@@ -1,4 +1,9 @@
-# Data-Sci-Analytics-MBA-USP
+# Data Science & Analytics
+
+# MBA USP ESALQ
+
+![USP](https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Fmbauspesalq&psig=AOvVaw3oSHDTBe7RLilRzm22nOp7&ust=1666623828047000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCOjPp-PP9voCFQAAAAAdAAAAABAI)
+
 Anotações e exercícios do MBA em Data Science e Analytics pela ESALQ USP
 
 As informações sobre o curso foram retiradas da página do curso <https://mbauspesalq.com/cursos/mba-em-data-science-e-analytics>
