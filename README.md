@@ -1,9 +1,9 @@
 # Data Science & Analytics
 
 # MBA USP ESALQ
-```{r}
-knitr::include_graphics("mba.PNG")
-```
+
+![plot](C:/Users/Matheus Ferreira/Pictures/plot.png)
+
 Anotações e exercícios do MBA em Data Science e Analytics pela ESALQ USP
 
 As informações sobre o curso foram retiradas da página do curso <https://mbauspesalq.com/cursos/mba-em-data-science-e-analytics>
