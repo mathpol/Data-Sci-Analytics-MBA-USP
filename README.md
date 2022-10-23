@@ -64,14 +64,15 @@ Profissionais atuantes nas mais diversas áreas, que precisam ou desejam adquiri
 
 A metodologia do curso está fundamentada na interação entre teoria e prática, com o objetivo de desenvolver nos alunos o pensamento crítico e habilitar a busca por soluções, tanto nas atividades atuais quanto futuras, construindo o conhecimento para encarar desafios ao longo da carreira profissional.
 
-# Programa do Curso
+## Programa do Curso
 
-## MÓDULO INTRODUTÓRIO
+### \checkmark Módulo Introdutório (04/10 - 21/10) 
+
 - Estatística 
 
 - Introdução ao Software R e Introdução ao Machine Learning
 
-## DATA SCIENCE E BIG DATA NO AMBIENTE DE NEGÓCIOS
+### Data Science e Big Data no Ambiente de Negócios
 
 - Metodologias Ágeis 
 
@@ -96,7 +97,7 @@ A metodologia do curso está fundamentada na interação entre teoria e prática
 - Tópicos Especiais de Gestão em Tecnologia de Negócios
 
 
-## MODELOS SUPERVISIONADOS E NÃO SUPERVISIONADOS DE MACHINE LEARNING
+### Modelos Supervisionados e não Supervisionados de Machine Learning
 
 - Clustering 
 
@@ -116,7 +117,7 @@ A metodologia do curso está fundamentada na interação entre teoria e prática
 
 - Big Data e Deployment de Modelos
 
-## TENDÊNCIAS EM DATA SCIENCE E ANALYTICS
+### Tendências em Data Science e Analytics
 
 - Data Wrangling 
 
