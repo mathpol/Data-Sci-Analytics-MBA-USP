@@ -66,7 +66,7 @@ A metodologia do curso está fundamentada na interação entre teoria e prática
 
 ## Programa do Curso
 
-### \checkmark Módulo Introdutório (04/10 - 21/10) 
+### $\checkmark$ Módulo Introdutório (04/10 - 21/10)
 
 - Estatística 
 
