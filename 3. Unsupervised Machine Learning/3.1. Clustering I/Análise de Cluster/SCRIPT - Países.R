@@ -61,7 +61,7 @@ matriz_D <- pais_padronizado %>%
 
 # 1º Teste: Elaboração da clusterização hierárquica como "single linkage"
 cluster_hier_single <- agnes(x = matriz_D, method = "single")
-
+cluster_hier_single
 # Construção do dendrograma "single linkage"
 dev.off()
 fviz_dend(x = cluster_hier_single, show_labels = F)
@@ -86,13 +86,15 @@ fviz_dend(x = cluster_hier_average, show_labels = F)
 ## Vamos optar pelo complete linkage (average cria clusters com menos observações)
 
 # Dendrograma com visualização dos clusters (selecionando por "altura")
+?fviz_dend # veja o que cada argumento da função significa
+
 fviz_dend(x = cluster_hier_complete,
           h = 5.5,
           color_labels_by_k = F,
           rect = T,
           rect_fill = T,
           rect_border = "black",
-          lwd = 1,
+          lwd = .8,
           show_labels = F,
           ggtheme = theme_bw())
 
@@ -103,12 +105,14 @@ fviz_dend(x = cluster_hier_complete,
 coeficientes <- sort(cluster_hier_complete$height, decreasing = FALSE) 
 esquema <- as.data.frame(cbind(cluster_hier_complete$merge, coeficientes))
 names(esquema) <- c("Cluster1", "Cluster2", "Coeficientes")
-esquema
+esquema |> glimpse()
 
 ## Portanto, vamos gerar uma variável indicando 12 clusters
 
-paises$cluster_H <- factor(cutree(tree = cluster_hier_complete, k = 12))
-pais_padronizado$cluster_H <- factor(cutree(tree = cluster_hier_complete, k = 12))
+paises$cluster_H <- factor(cutree(tree = cluster_hier_complete, k = 12)) # com variaveis nao padronizadas
+
+
+pais_padronizado$cluster_H <- factor(cutree(tree = cluster_hier_complete, k = 12)) # com var. padronizadas
 
 # A seguir, vamos verificar se todas as variáveis ajudam na formação dos grupos
 

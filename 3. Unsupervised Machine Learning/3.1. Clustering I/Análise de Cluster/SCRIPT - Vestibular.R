@@ -133,6 +133,7 @@ names(esquema) <- c("Cluster1", "Cluster2", "Coeficientes")
 esquema
 
 # Visualização do esquema hierárquico de aglomeração
+# Sinais negativos significam observações. Positivos significam o estágio da agloiomeração (cluster)
 esquema %>%
   kable(row.names = T) %>%
   kable_styling(bootstrap_options = "striped", 

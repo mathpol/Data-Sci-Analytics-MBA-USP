@@ -41,7 +41,8 @@ View(PesquisaBinária)
 
 # Contagem das categorias por variável
 vetor_var <- names(PesquisaBinária)
-map(PesquisaBinária[vetor_var], ~ summary(as.factor(.)))
+map(PesquisaBinária[vetor_var], ~ janitor::tabyl(as.factor(.))) # Em vez de janitor::tabyl o prof usa summary
+
 
 #---------- Esquema de aglomeração hierárquico ---------------------------------
 
